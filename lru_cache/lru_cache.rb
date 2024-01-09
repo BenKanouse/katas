@@ -1,14 +1,17 @@
 class LRUCache
+  require 'debug'
+
   attr_reader :capacity
   attr_accessor :cache
 
   class CacheItem
-    attr_reader :key, :value, :created_at
+    attr_accessor :created_at
+    attr_reader :key, :value
 
     def initialize(key:, value:)
       @key = key
       @value = value
-      @created_at = Time.new.to_f
+      @created_at = Time.new.to_r
     end
   end
 
@@ -18,7 +21,10 @@ class LRUCache
   end
 
   def get(key)
-    cache[key]&.value || -1
+    return -1 if cache[key].nil?
+
+    cache[key].created_at = Time.new.to_r
+    cache[key]&.value
   end
 
   def put(key, value)
