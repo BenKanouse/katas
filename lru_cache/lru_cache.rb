@@ -1,17 +1,15 @@
 class LRUCache
-  require 'debug'
-
   attr_reader :capacity
   attr_accessor :cache
 
   class CacheItem
-    attr_accessor :created_at
+    attr_accessor :used_at
     attr_reader :key, :value
 
     def initialize(key:, value:)
       @key = key
       @value = value
-      @created_at = Time.new.to_r
+      @used_at = Time.now.to_r
     end
   end
 
@@ -23,7 +21,7 @@ class LRUCache
   def get(key)
     return -1 if cache[key].nil?
 
-    cache[key].created_at = Time.new.to_r
+    cache[key].used_at = Time.now.to_r
     cache[key]&.value
   end
 
@@ -35,10 +33,11 @@ class LRUCache
   private
 
   def evictee
-    cache.min_by{ |_key, item| item.created_at }[1]
+    cache.min_by{ |_key, item| item.used_at }[1]
   end
 
   def evict
-    cache.reject!{ |_key, item| item == evictee }
+    item_to_evict = evictee
+    cache.reject!{ |_key, item| item == item_to_evict }
   end
 end
