@@ -1,5 +1,5 @@
 class CommentStripper
-  def strip
-    # TODO
+  def strip(input, markers)
+    input.gsub(/\s*#{Regexp.union(markers)}.*$/, '')
   end
 end
