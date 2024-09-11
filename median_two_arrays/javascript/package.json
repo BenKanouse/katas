@@ -1,0 +1,13 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "This is a template for the katas.",
+  "main": "solution.js",
+  "scripts": {
+    "test": "mocha tests/**.js"
+  },
+  "dependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  }
+}
