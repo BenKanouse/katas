@@ -27,4 +27,12 @@ describe TimeConversion do
   it 'returns values slightly after midnight' do
     expect(described_class.run('12:12:12AM')).to eq '00:12:12'
   end
+
+  it 'handles values without seconds' do
+    expect(described_class.run('12:01PM')).to eq '12:01:00'
+  end
+
+  it 'handles a space between seconds and period' do
+    expect(described_class.run('12:01 PM')).to eq '12:01:00'
+  end
 end
